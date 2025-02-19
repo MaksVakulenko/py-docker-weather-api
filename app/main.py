@@ -1,16 +1,17 @@
+import logging
 import os
 import requests
 
 API_URL = "http://api.weatherapi.com/v1/current.json"
-CITY = "Paris"
+CITY = os.getenv("CITY", "Paris")
 
 
 def get_weather() -> None:
     api_key = os.getenv("API_KEY")
 
     if not api_key:
-        print("Error: API_KEY environment variable is not set")
-        return
+        logging.error("API_KEY environment variable is not set")
+        raise ValueError("API_KEY environment variable is required")
 
     params = {
         "key": api_key,
